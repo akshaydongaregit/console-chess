@@ -3,11 +3,14 @@
  */
 package com.chess;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
+    @Test
+    public void testApp() {
         App classUnderTest = new App();
         assertTrue(true);
     }
