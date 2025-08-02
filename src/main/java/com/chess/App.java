@@ -12,11 +12,12 @@ public class App {
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         try {
-            String inputs[] = input.split(",");
+            String[] inputs = input.split(",");
             String pieceName = inputs[0];
             String block = inputs[1];
             showPossibleMoves(pieceName, block);
         }catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Please provide valid input");
         }
     }
@@ -25,5 +26,7 @@ public class App {
         System.out.printf("Possible moves for %s at %s block are: ", pieceName, block);
         //TODO
         /* calculating and printing possible moves will add here later on */
+        ChessBoard chessBoard = new ChessBoard();
+        System.out.println(chessBoard);
     }
 }
