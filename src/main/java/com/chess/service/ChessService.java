@@ -1,4 +1,11 @@
-package com.chess;
+package com.chess.service;
+
+import com.chess.dto.Cell;
+import com.chess.dto.ChessBoard;
+import com.chess.exception.NotFoundException;
+import com.chess.exception.NotSupportedException;
+import com.chess.walk.WalkFactory;
+import com.chess.walk.Walk;
 
 import java.util.List;
 
@@ -19,14 +26,9 @@ public class ChessService {
      * @param cellId cell id
      * @return list of cells
      */
-    public List<Cell> getAllPossibleMovesForCell(ChessBoard chessBoard, String cellId) {
+    public List<Cell> getAllPossibleMovesForCell(ChessBoard chessBoard, String cellId) throws NotSupportedException, NotFoundException {
         Cell cell = chessBoard.findCellById(cellId);
-        Walk walk = new PawnWalk();
-        if(PieceType.KING.name().equals(cell.getPiece().getType().name())) {
-            walk = new KingWalk();
-        } else if(PieceType.QUEEN.name().equals(cell.getPiece().getType().name())) {
-            walk = new QueenWalk();
-        }
+        Walk walk = WalkFactory.getWalkForPiece(cell.getPiece().getType());
         return walk.getAllPossibleMoves(cell, chessBoard);
     }
 }

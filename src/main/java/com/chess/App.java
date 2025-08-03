@@ -3,6 +3,13 @@
  */
 package com.chess;
 
+import com.chess.constants.PieceType;
+import com.chess.dto.Cell;
+import com.chess.dto.ChessBoard;
+import com.chess.exception.NotFoundException;
+import com.chess.exception.NotSupportedException;
+import com.chess.service.ChessService;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -26,10 +33,10 @@ public class App {
     /**
      * Initialize new empty chessboard, place piece({@code pieceName}) at cell({@code cellId}) provided in input
      * and calculate and print all possible moves  by using chess service.
-     * @param pieceType
-     * @param cellId
+     * @param pieceType piece type e.g. Pawn
+     * @param cellId cell id e.g. A1
      */
-    public static void showPossibleMoves(String pieceType, String cellId) {
+    public static void showPossibleMoves(String pieceType, String cellId) throws NotFoundException, NotSupportedException {
 
         ChessService chessService = new ChessService();
 
@@ -41,7 +48,11 @@ public class App {
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
 
         //format moves list and print
-        System.out.printf("Possible moves for %s at %s block are: ", pieceType, cellId);
-        System.out.println(possibleMoves.stream().map(Cell::getId).collect(Collectors.joining(", ")));
+        if(!possibleMoves.isEmpty()) {
+            System.out.printf("Possible moves for %s at %s cell are: ", pieceType, cellId);
+            System.out.println(possibleMoves.stream().map(Cell::getId).collect(Collectors.joining(", ")));
+        } else {
+            System.out.println("There are no valid moves for piece "+pieceType+" from position "+cellId);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.chess;
+package com.chess.constants;
 
 public enum PieceType {
     PAWN,

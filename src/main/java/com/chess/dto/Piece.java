@@ -1,4 +1,6 @@
-package com.chess;
+package com.chess.dto;
+
+import com.chess.constants.PieceType;
 
 import java.io.Serializable;
 

@@ -4,6 +4,12 @@
 package com.chess;
 
 
+import com.chess.constants.PieceType;
+import com.chess.dto.Cell;
+import com.chess.dto.ChessBoard;
+import com.chess.exception.NotFoundException;
+import com.chess.exception.NotSupportedException;
+import com.chess.service.ChessService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +27,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_Pawn() {
+    public void testGetAllPossibleMovesForCell_Pawn() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -34,7 +40,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_PawnInLastRow() {
+    public void testGetAllPossibleMovesForCell_PawnInLastRow() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -47,7 +53,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_King() {
+    public void testGetAllPossibleMovesForCell_King() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -65,7 +71,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_KingInLastRowAndLastColumn() {
+    public void testGetAllPossibleMovesForCell_KingInLastRowAndLastColumn() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -84,7 +90,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_Queen() {
+    public void testGetAllPossibleMovesForCell_Queen() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -106,7 +112,7 @@ public class ChessServiceTest {
     }
 
     @Test
-    public void testGetAllPossibleMovesForCell_QueenInLastRowAndLastColumn() {
+    public void testGetAllPossibleMovesForCell_QueenInLastRowAndLastColumn() throws NotFoundException, NotSupportedException {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
         Assertions.assertNotNull(chessBoard);
@@ -124,5 +130,29 @@ public class ChessServiceTest {
                 () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
                 () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
         );
+    }
+
+    @Test
+    public void testGetAllPossibleMovesForCell_RookNotSupportedException() throws NotFoundException {
+        ChessService chessService = new ChessService();
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        Assertions.assertNotNull(chessBoard);
+        String cellId = "D5";
+        String expectPossibleMoves = "D6";
+        chessBoard.placePieceAtCell(PieceType.ROOK, cellId);
+        NotSupportedException exception =
+                Assertions.assertThrows(NotSupportedException.class, () -> chessService.getAllPossibleMovesForCell(chessBoard, cellId));
+        Assertions.assertNotNull(exception);
+    }
+
+    @Test
+    public void testGetAllPossibleMovesForInvalidCell() {
+        ChessService chessService = new ChessService();
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        Assertions.assertNotNull(chessBoard);
+        String cellId = "Z10";
+        NotFoundException exception =
+                Assertions.assertThrows(NotFoundException.class, () -> chessBoard.placePieceAtCell(PieceType.ROOK, cellId));
+        Assertions.assertNotNull(exception);
     }
 }

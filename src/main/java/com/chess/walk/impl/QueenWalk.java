@@ -1,4 +1,8 @@
-package com.chess;
+package com.chess.walk.impl;
+
+import com.chess.dto.Cell;
+import com.chess.dto.ChessBoard;
+import com.chess.walk.Walk;
 
 import java.util.ArrayList;
 import java.util.List;
