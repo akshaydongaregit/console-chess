@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class WalkFactory {
 
-    private static final HashMap<PieceType, Walk> pieceWalksMap = new HashMap<>() {{
+    private static final HashMap<PieceType, Walk> pieceWalksMap = new HashMap() {{
         put(PieceType.PAWN, new PawnWalk());
         put(PieceType.KING, new KingWalk());
         put(PieceType.QUEEN, new QueenWalk());

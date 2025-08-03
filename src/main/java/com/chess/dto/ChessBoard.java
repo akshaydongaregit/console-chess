@@ -34,7 +34,7 @@ public class ChessBoard implements Serializable {
         Optional<Cell> matchingCell = Arrays.stream(cells).flatMap(Arrays::stream)
                 .filter(cell -> cell.getId().equals(cellId.trim().toUpperCase()))
                 .findFirst();
-        if(matchingCell.isEmpty()) {
+        if(!matchingCell.isPresent()) {
             throw new NotFoundException("Invalid cell, Cell with id " + cellId + " not found on chessboard.");
         }
         return matchingCell.get();
