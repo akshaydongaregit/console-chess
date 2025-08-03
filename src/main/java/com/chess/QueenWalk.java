@@ -3,6 +3,7 @@ package com.chess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -39,6 +40,6 @@ public class QueenWalk implements Walk {
                     } else {
                         return null;
                     }
-                }).filter(Objects::nonNull).toList();
+                }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 }

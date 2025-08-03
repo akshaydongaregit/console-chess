@@ -57,7 +57,7 @@ public class ChessServiceTest {
         chessBoard.placePieceAtCell(PieceType.KING, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
         Assertions.assertNotNull(possibleMoves);
-        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).collect(Collectors.toList());
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
                 () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
@@ -76,7 +76,7 @@ public class ChessServiceTest {
         chessBoard.placePieceAtCell(PieceType.KING, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
         Assertions.assertNotNull(possibleMoves);
-        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).collect(Collectors.toList());
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
                 () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
@@ -98,7 +98,7 @@ public class ChessServiceTest {
         chessBoard.placePieceAtCell(PieceType.QUEEN, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
         Assertions.assertNotNull(possibleMoves);
-        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).collect(Collectors.toList());
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
                 () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
@@ -119,7 +119,7 @@ public class ChessServiceTest {
         chessBoard.placePieceAtCell(PieceType.QUEEN, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
         Assertions.assertNotNull(possibleMoves);
-        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).collect(Collectors.toList());
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
                 () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
