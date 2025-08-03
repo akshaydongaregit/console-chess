@@ -1,8 +1,13 @@
 package com.chess;
 
-public class Piece {
+import java.io.Serializable;
+
+
+public class Piece implements Serializable {
+
     private PieceType type;
-    private Cell currentPosition;
+
+    private transient Cell currentPosition;
 
     public Piece(PieceType type) {
         this.type = type;

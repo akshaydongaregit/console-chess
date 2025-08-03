@@ -1,6 +1,8 @@
 package com.chess;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 
     private String id;
 

@@ -3,30 +3,45 @@
  */
 package com.chess;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class App {
 
     public static void main(String[] args) {
-        System.out.print("Please provide comma separated value for piece and block (e.g. Pawn,G7):");
+        System.out.print("Please provide comma separated value for piece and cell (e.g. Pawn,G7):");
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         try {
             String[] inputs = input.split(",");
-            String pieceName = inputs[0];
-            String block = inputs[1];
-            showPossibleMoves(pieceName, block);
+            String pieceType = inputs[0];
+            String cellId = inputs[1];
+            showPossibleMoves(pieceType, cellId);
         }catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Please provide valid input");
+            System.err.println(e.getMessage());
         }
     }
 
-    public static void showPossibleMoves(String pieceName, String block) {
-        System.out.printf("Possible moves for %s at %s block are: ", pieceName, block);
-        //TODO
-        /* calculating and printing possible moves will add here later on */
-        ChessBoard chessBoard = new ChessBoard();
-        System.out.println(chessBoard);
+    /**
+     * Initialize new empty chessboard, place piece({@code pieceName}) at cell({@code cellId}) provided in input
+     * and calculate and print all possible moves  by using chess service.
+     * @param pieceType
+     * @param cellId
+     */
+    public static void showPossibleMoves(String pieceType, String cellId) {
+
+        ChessService chessService = new ChessService();
+
+        // init empty chess board and place piece at cell provided in input
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        chessBoard.placePieceAtCell(PieceType.valueOf(pieceType.toUpperCase()), cellId);
+
+        //get all possible moves for asked cell
+        List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
+
+        //format moves list and print
+        System.out.printf("Possible moves for %s at %s block are: ", pieceType, cellId);
+        System.out.println(possibleMoves.stream().map(Cell::getId).collect(Collectors.joining(", ")));
     }
 }
