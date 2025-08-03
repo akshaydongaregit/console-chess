@@ -16,25 +16,22 @@ import java.util.stream.Collectors;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotFoundException, NotSupportedException {
         System.out.print("Please provide comma separated value for piece and cell (e.g. Pawn,G7):");
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
-        try {
-            String[] inputs = input.split(",");
-            String pieceType = inputs[0];
-            String cellId = inputs[1];
-            showPossibleMoves(pieceType, cellId);
-        }catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        String[] inputs = input.split(",");
+        String pieceType = inputs[0];
+        String cellId = inputs[1];
+        showPossibleMoves(pieceType, cellId);
     }
 
     /**
      * Initialize new empty chessboard, place piece({@code pieceName}) at cell({@code cellId}) provided in input
      * and calculate and print all possible moves  by using chess service.
+     *
      * @param pieceType piece type e.g. Pawn
-     * @param cellId cell id e.g. A1
+     * @param cellId    cell id e.g. A1
      */
     public static void showPossibleMoves(String pieceType, String cellId) throws NotFoundException, NotSupportedException {
 
@@ -48,11 +45,11 @@ public class App {
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
 
         //format moves list and print
-        if(!possibleMoves.isEmpty()) {
+        if (!possibleMoves.isEmpty()) {
             System.out.printf("Possible moves for %s at %s cell are: ", pieceType, cellId);
             System.out.println(possibleMoves.stream().map(Cell::getId).collect(Collectors.joining(", ")));
         } else {
-            System.out.println("There are no valid moves for piece "+pieceType+" from position "+cellId);
+            System.out.println("There are no valid moves for piece " + pieceType + " from position " + cellId);
         }
     }
 }
