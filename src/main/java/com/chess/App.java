@@ -35,7 +35,7 @@ public class App {
 
         // init empty chess board and place piece at cell provided in input
         ChessBoard chessBoard = chessService.startNewChessGame();
-        chessBoard.placePieceAtCell(PieceType.valueOf(pieceType.toUpperCase()), cellId);
+        chessBoard.placePieceAtCell(PieceType.valueOf(pieceType.trim().toUpperCase()), cellId);
 
         //get all possible moves for asked cell
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);

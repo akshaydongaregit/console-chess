@@ -1,0 +1,2 @@
+@rem run App class
+java -cp ./build/classes/java/main/ com.chess.App
