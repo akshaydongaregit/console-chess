@@ -1,5 +1,6 @@
 package com.chess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,10 @@ public class PawnWalk implements Walk {
         Cell[][] cells = chessBoard.getCells();
         int currentRow = position.getRow();
         int currentColumn = position.getCol();
-        return List.of(cells[currentRow+1][currentColumn]);
+        List<Cell> possibleMoves = new ArrayList<>();
+        if(currentRow+1 < 8) {
+            possibleMoves.add(cells[currentRow+1][currentColumn]);
+        }
+        return possibleMoves;
     }
 }

@@ -1,5 +1,6 @@
 package com.chess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,9 +15,23 @@ public class KingWalk implements Walk {
         Cell[][] cells = chessBoard.getCells();
         int currentRow = position.getRow();
         int currentColumn = position.getCol();
-        return List.of(cells[currentRow+1][currentColumn], cells[currentRow-1][currentColumn],
-                cells[currentRow][currentColumn+1], cells[currentRow][currentColumn-1],
-                cells[currentRow+1][currentColumn+1], cells[currentRow+1][currentColumn-1],
-                cells[currentRow-1][currentColumn+1], cells[currentRow-1][currentColumn-1]);
+        List<Cell> possibleMoves = new ArrayList<>();
+
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow+1, currentColumn);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow-1, currentColumn);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow, currentColumn+1);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow, currentColumn-1);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow+1, currentColumn+1);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow+1, currentColumn-1);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow-1, currentColumn+1);
+        addMoveIfWithinBounds(possibleMoves, cells, currentRow-1, currentColumn-1);
+
+        return possibleMoves;
+    }
+
+    public void addMoveIfWithinBounds(List<Cell> moves, Cell[][] cells, int row, int column) {
+        if( row<8 && row>=0 && column<8 && column>=0) {
+            moves.add(cells[row][column]);
+        }
     }
 }

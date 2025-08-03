@@ -33,6 +33,19 @@ public class ChessServiceTest {
     }
 
     @Test
+    public void testGetAllPossibleMovesForCell_PawnInLastRow() {
+        ChessService chessService = new ChessService();
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        Assertions.assertNotNull(chessBoard);
+        String cellId = "D8";
+        String expectPossibleMoves = "";
+        chessBoard.placePieceAtCell(PieceType.PAWN, cellId);
+        List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
+        Assertions.assertNotNull(possibleMoves);
+        Assertions.assertEquals(expectPossibleMoves, possibleMoves.stream().map(Cell::getId).collect(Collectors.joining(", ")));
+    }
+
+    @Test
     public void testGetAllPossibleMovesForCell_King() {
         ChessService chessService = new ChessService();
         ChessBoard chessBoard = chessService.startNewChessGame();
@@ -40,6 +53,25 @@ public class ChessServiceTest {
         String cellId = "D5";
         List<String> expectedPossibleMoves = List.of(
                 "D4", "D6", "C5", "E5", "C4", "E6", "C6", "E4"
+        );
+        chessBoard.placePieceAtCell(PieceType.KING, cellId);
+        List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
+        Assertions.assertNotNull(possibleMoves);
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
+                () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
+        );
+    }
+
+    @Test
+    public void testGetAllPossibleMovesForCell_KingInLastRowAndLastColumn() {
+        ChessService chessService = new ChessService();
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        Assertions.assertNotNull(chessBoard);
+        String cellId = "H8";
+        List<String> expectedPossibleMoves = List.of(
+                "G8", "G7", "H7"
         );
         chessBoard.placePieceAtCell(PieceType.KING, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
@@ -63,6 +95,27 @@ public class ChessServiceTest {
                 "A4", "B4", "C4", "D4", "F4", "G4", "H4",
                 "E1", "E2", "E3", "E5", "E6", "E7", "E8"
                 );
+        chessBoard.placePieceAtCell(PieceType.QUEEN, cellId);
+        List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
+        Assertions.assertNotNull(possibleMoves);
+        List<String> actualPossibleMoves = possibleMoves.stream().map(Cell::getId).toList();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(expectedPossibleMoves.size(), actualPossibleMoves.size()),
+                () -> Assertions.assertTrue(actualPossibleMoves.containsAll(expectedPossibleMoves))
+        );
+    }
+
+    @Test
+    public void testGetAllPossibleMovesForCell_QueenInLastRowAndLastColumn() {
+        ChessService chessService = new ChessService();
+        ChessBoard chessBoard = chessService.startNewChessGame();
+        Assertions.assertNotNull(chessBoard);
+        String cellId = "H8";
+        List<String> expectedPossibleMoves = List.of(
+                "A8", "B8", "C8", "D8", "E8", "F8", "G8",
+                "G7", "F6", "E5", "D4", "C3", "B2", "A1",
+                "H7", "H6", "H5", "H4", "H3", "H2", "H1"
+        );
         chessBoard.placePieceAtCell(PieceType.QUEEN, cellId);
         List<Cell> possibleMoves = chessService.getAllPossibleMovesForCell(chessBoard, cellId);
         Assertions.assertNotNull(possibleMoves);
